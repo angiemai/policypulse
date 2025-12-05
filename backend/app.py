@@ -6,12 +6,37 @@ import os
 from dotenv import load_dotenv
 from typing import Dict, List, Any, Optional
 from src.saving_doc.coverage_evaluator_AI import get_perplexity_response
-from src.saving_doc.Saving_documents import collectionEditedDoc, Doc, collectionNotifications, Notification
+# from src.saving_doc.Saving_documents import collectionEditedDoc, Doc, collectionNotifications, Notification
 from datetime import datetime
 load_dotenv()
 from src.calculator.calculations import calculate_company_impact
 from src.ai_agent.agent import get_gemini_response
 from bson import ObjectId
+
+# Initialize DynamoDB client with fallback to mock storage
+aws_region = os.getenv("AWS_REGION", "eu-north-1")
+aws_access_key = os.getenv("AWS_ACCESS_KEY_ID")
+aws_secret_key = os.getenv("AWS_SECRET_ACCESS_KEY")
+import boto3
+from botocore.exceptions import ClientError
+
+# Initialize DynamoDB client
+dynamodb = boto3.resource(
+            "dynamodb",
+            region_name=aws_region,
+            aws_access_key_id=aws_access_key,
+            aws_secret_access_key=aws_secret_key
+        )
+
+dynamodb = boto3.resource("dynamodb", region_name="eu-north-1")
+
+# Tables (replace with your actual table names)
+#policy_docs_table = dynamodb.Table("EditedDocs")
+# notifications_table = dynamodb.Table("Notifications")
+policy_docs_table = dynamodb.Table("policy-documents-table")         # "Edited_Doc")
+notifications_table = dynamodb.Table("policy-notification-table")     # "Notifications")
+ 
+
 
 # Define your directories and collection names based on your .env file
 DEFAULT_DOCS_DIRECTORY = os.getenv("DEFAULT_DOCS_DIRECTORY")
@@ -120,6 +145,23 @@ class PolicyCalculationResponse(BaseModel):
     snapshotSummary: str
     totalAnnualCost: str
 
+class Doc(BaseModel):  # creating a JSON class where the editor content can be inputted
+    docId: Optional[str] = None
+    name: str = "Untitled"
+    status: str = "Draft"
+    content: Dict[str, Any]
+    CreatedAt: str = None
+    version: str ="0.08"
+    userId: str = "A_number"
+
+class Notification(BaseModel):
+    category: str ="sysUpdate"
+    title:str
+    content:str
+    time:str
+    isDeleted: bool = False
+
+
 @app.post("/calculate_policy_impact", response_model=PolicyCalculationResponse)
 async def calculate_policy_impact_endpoint(request: PolicyCalculationRequest):
     """
@@ -143,76 +185,77 @@ async def suggest_text(request: Request):
     text = body.get("text","")
     return await get_perplexity_response(text)
 
-@app.post("/saved-docs/") #TO SAVE DOCUMENTS IN MONGODB
-async def save_doc(document: Doc):
-    #Convert the Pydantic model into a python dictionary
-    doc_dict = document.dict()
 
-    #To UPDATE
-    if doc_dict["docId"]:
-        try:
-            obj_id = ObjectId(doc_dict["docId"])
-        except Exception:
-            raise HTTPException(status_code=400, detail="Invalid ObjectId format")
-
-        doc_dict["LastUpdatedAt"]=datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-        result = collectionEditedDoc.replace_one({"_id": obj_id}, doc_dict, upsert=True)
-
-    else:
-        doc_dict["CreatedAt"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        doc_dict["LastUpdatedAt"] = doc_dict["CreatedAt"]
-        collectionEditedDoc.insert_one(doc_dict)
-    #collection.update_one(doc_dict) NOT EXACTLY THE SAME
-    return {"message": "Document received in backend"}
 
 @app.post("/notifications")
 async def notifications(notif: Notification):
-    doc_dict = notif.dict()
-    collectionNotifications.insert_one(doc_dict)
+    doc_dict = notif.model_dump()
+    notifications_table .put_item(Item=doc_dict)
     return{"message": "Document received in backend"}
 
-@app.get("/my-saved-policies") #TODO: sort them in ascending or descending order depending on updated time
-def get_docs_for_list ():
+@app.get("/notifications")
+def get_notifications():
+    response = notifications_table.scan()
+    items = response.get("Items", [])
+
+    notif = []
+    for doc in items:
+        new_doc = {k: v for k, v in doc.items() if k not in ["content", "userId", "CreatedAt"]}
+        notif.append(new_doc)
+
+    if notif:
+        return notif
+    else:
+        raise HTTPException(status_code=404, detail="Notification not found")
+
+
+@app.post("/saved-docs/")
+async def save_doc(document: Doc):
+    doc_dict = document.model_dump()
+
+    if doc_dict["docId"]:
+        # Update existing document
+        doc_dict["LastUpdatedAt"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        policy_docs_table.put_item(Item=doc_dict)  # upsert in DynamoDB
+    else:
+        # Create new document
+        ## doc_dict["url_hash"] = doc_dict["docId"] 
+##        doc_dict["contenct"] = doc_dict["docId"] 
+        doc_dict["CreatedAt"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        doc_dict["LastUpdatedAt"] = doc_dict["CreatedAt"]
+        policy_docs_table.put_item(Item=doc_dict)
+
+    return {"message": "Document received in backend"}
+
+
+@app.get("/my-saved-policies")
+def get_docs_for_list():
+    response = policy_docs_table.scan()
+    items = response.get("Items", [])
+
     info = []
-    for doc in collectionEditedDoc.find():
-        new_doc = {k: v for k, v in doc.items() if k != 'content' and k!='userId' and k!="CreatedAt"}
-        new_doc["_id"] = str(new_doc["_id"])
+    for doc in items:
+        new_doc = {k: v for k, v in doc.items() if k not in ["content", "userId", "CreatedAt"]}
         info.append(new_doc)
+
     if info:
-        print(info)
         return info
     else:
         raise HTTPException(status_code=404, detail="Document not found")
 
+
+
 @app.get("/edit-document/{policyId}")
-def get_doc_to_edit(policyId:str):
-    try:
-        obj_id = ObjectId(policyId)
-    except Exception:
-        raise HTTPException(status_code=400, detail="Invalid ObjectId format")
-    doc = collectionEditedDoc.find_one({"_id": obj_id})
-    del doc["_id"]
-    if doc:
-        return doc
-    else:
+def get_doc_to_edit(policyId: str):
+    response = policy_docs_table.get_item(Key={"docId": policyId})
+    doc = response.get("Item")
+
+    if not doc:
         raise HTTPException(status_code=404, detail="Document not found")
 
-@app.get("notifications")
-def get_notifications():
-    notif=[]
-    for doc in collectionNotifications.find():
-        new_doc = {k: v for k, v in doc.items() if k != 'content' and k != 'userId' and k != "CreatedAt"}
-        new_doc["_id"] = str(new_doc["_id"])
-        notif.append(new_doc)
-    if notif:
-        print(notif)
-        return notif
-    else:
-        raise HTTPException(status_code=404, detail="Document not found")
+    return doc
+
 
 @app.get("/documents")
-def get_documents(collection_name:str):
+def get_documents(collection_name: str):
     print(f"Received documents for {collection_name}")
-
-
