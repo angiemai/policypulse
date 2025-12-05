@@ -1,0 +1,92 @@
+/* index.css */
+
+/* Global CSS Variables (Design Tokens) */
+:root {
+  --primary-color: rgba(127, 18, 234, 0.73); /* Purple */
+  --primary-color-hover: #6C2BB8; /* Darker purple for hover */
+  --secondary-color: #DAFF8E; /* Greenish-yellow */
+  --error-color: #dc2626; /* Red */
+  --error-bg-color: #fee2e2; /* Light red for error backgrounds */
+  --text-color: #1f2937; /* Dark gray for general text */
+  --bg-color: #f5f7fa; /* Light gray for general background */
+  --surface-color: #ffffff; /* White for card/container backgrounds */
+  --border-color: #e1e3e7; /* Light gray for borders */
+  --info-bg-color: #f0f9ff; /* Light blue for info backgrounds */
+  --info-border-color: #0ea5e9; /* Blue for info borders */
+  --info-text-color: #0369a1; /* Dark blue for info text */
+  --selected-option-bg: #e0f2fe; /* Light blue for selected options */
+  --correct-option-bg: #dcfce7; /* Light green for correct options */
+  --correct-option-border: #22c55e; /* Green for correct option borders */
+}
+
+/* Universal Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Base HTML & Body Styles */
+html,
+body,
+#root { /* Assuming #root is your main app mount point */
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  min-width: 320px;
+  text-align: left;
+}
+
+body {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-size: 16px; /* Ensure base font size is set */
+}
+
+/* Base Button Styles (applies to ALL buttons unless overridden) */
+button {
+  background-color: var(--primary-color);
+  color: var(--surface-color); /* Use surface-color for white text */
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, outline 0.2s ease; /* Add outline transition */
+  font-family: inherit; /* Inherit font from body */
+}
+
+button:hover {
+  background-color: var(--primary-color-hover);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+button:focus,
+button:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+.page-container {
+  background-color: rgba(255, 255, 255, 0);
+  padding: 0 35px;
+  border-radius: 15px;
+  margin-left:15px;
+  min-height: calc(100vh - 100px);
+}
+
+.page-header p{
+  font-size:14px;
+  color: #4a5462;
+}
+

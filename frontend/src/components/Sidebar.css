@@ -1,0 +1,128 @@
+/* src/components/Sidebar.css */
+
+/*
+  Sidebar Container
+  - Makes its children (header, nav, bottom section) arrange vertically.
+  - Ensures it takes full height of its parent (.app-sidebar from Layout.css).
+*/
+.sidebar-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Ensures it fills the height of .app-sidebar */
+  padding: 20px 0; /* Vertical padding for the entire sidebar content */
+}
+
+/* Sidebar Header */
+.sidebar-header {
+  padding: 0 20px; /* Horizontal padding  TODO: CHANGE SETTINGS */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 2px solid #e3e5e9;
+  margin-bottom: 10px; /* Space below the header */
+}
+
+.sidebar-header .logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.sidebar-header .app-title {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: var(--text-primary); /* Assuming --text-primary is defined in App.css or similar */
+  white-space: nowrap;
+}
+
+/*
+  Main Navigation Area (now wrapped by sidebar-menu-wrapper)
+  - flex-grow: 1 makes this section expand and push the bottom section down.
+  - display: flex and flex-direction: column stack the nav items.
+*/
+.sidebar-menu-wrapper {
+  flex-grow: 1; /* This is crucial: it takes all available space */
+  overflow-y: auto; /* Allows scrolling if menu items overflow */
+  padding: 0 15px; /* Horizontal padding for the menu wrapper */
+}
+
+/* Navigation Item Styling (applies to Ant Design Menu items and custom links like Settings) */
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 15px;
+  border-radius: 8px; /* Slightly rounded corners for nav items */
+  color: var(--text-color); /* Default text color */
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  margin-bottom: 5px; /* Space between nav items */
+}
+
+.nav-item:hover {
+  background-color: #f0f4f8; /* Light background on hover */
+  color: var(--primary-color); /* Primary color on hover */
+}
+
+.nav-item.active {
+  background-color: var(--primary-color); /* Active item background */
+  color: white; /* White text for active item */
+}
+
+/* IMPORTANT: Increased specificity for Ant Design icons within active nav items */
+.nav-item.active .anticon,
+.nav-item.active .anticon svg { /* Ensure SVG path/element also gets the color */
+    color: white !important; /* Use !important if other rules are overriding */
+}
+
+/* Bottom Section (User Info and Settings) */
+.sidebar-footer {
+  padding: 15px 15px 0; /* Top padding to separate from nav, horizontal padding */
+  border-top: 1px solid var(--border-color); /* Separator line */
+  margin-top: 20px; /* Space above the separator */
+  display: flex; /* Make footer a flex container */
+  flex-direction: column; /* Stack user info and settings link vertically */
+  gap: 2px; /* Space between user info, settings and notifications link */
+}
+
+/* User Info Styling (within sidebar-footer) */
+
+.user-information {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-overflow: ellipsis; /*TODO : Make sure it does not just truncate but gives ellipsis (...)*/
+  overflow: hidden;
+  /* margin-bottom: 15px; Removed as gap on sidebar-footer handles spacing */
+  padding: 10px 20px 10px 0;
+}
+
+/* Adjust Clerk's UserButton styling if necessary */
+/* This class might need to be more specific or target a parent if not directly applying */
+.cl-userButtonBox {
+    display: flex;
+    align-items: center;
+}
+
+/*TODO: THESE ARE SERIOUSLY JUST NOT WORKING*/
+/* User Details (name and email) */
+.user-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-weight: bold;
+  color: var(--text-primary);
+  font-size: 0.95em;
+}
+
+.user-email {
+  white-space: nowrap;
+  overflow: hidden;
+  /*word-break:break-word;*/
+  text-overflow: ellipsis;
+  font-size: 0.6em;
+  /*color: var(--text-secondary);*/
+}

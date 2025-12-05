@@ -1,0 +1,117 @@
+/* src/agent/AIAgent.css */
+
+.chatbot-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Take full height of parent */
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width: 100%; /* Ensure it takes full width of its parent */
+  max-width: 1400px; /* <--- UPDATED: Increased max-width to match My Policies page */
+  margin: 0 auto; /* Center the container */
+  min-height: calc(100vh - 100px); /* Adjust based on Layout padding and header */
+}
+
+.chatbot-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-color); /* Black color */
+  text-align: left; /* Left aligned */
+}
+
+.chat-messages {
+  flex-grow: 1; /* Allows messages area to take available space */
+  padding: 1rem;
+  overflow-y: auto; /* Enable scrolling for messages */
+  background-color: #f8fafc; /* Light gray background for chat area */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* Push messages to the bottom */
+}
+
+.empty-chat-message {
+  text-align: center;
+  color: var(--text-secondary);
+  padding: 1rem;
+  flex-grow: 1; /* Center message vertically */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chat-message {
+  margin-bottom: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  max-width: 80%;
+  word-wrap: break-word; /* Ensure long words break */
+}
+
+.user-message {
+  background-color: #e0f2fe; /* Light blue for user messages */
+  color: #2563eb; /* Darker blue text */
+  margin-left: auto; /* Align user messages to the right */
+}
+
+.model-message {
+  background-color: #e5e7eb; /* Light gray for model messages */
+  color: #1f2937; /* Dark text */
+  margin-right: auto; /* Align model messages to the left */
+}
+
+.loading-message {
+  margin-bottom: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  background-color: #e5e7eb;
+  color: #1f2937;
+  max-width: 80%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.chat-error-alert {
+  margin: 1rem;
+  border-radius: 0.375rem;
+}
+
+.chat-input-area {
+  padding: 1rem;
+  border-top: 1px solid var(--border-color);
+  background-color: white;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.message-input.ant-input-textarea { /* Targeting Ant Design TextArea */
+  flex: 1;
+  border-radius: 0.375rem;
+  border: 1px solid var(--border-color);
+  resize: none; /* Prevent manual resizing */
+  padding: 0.75rem 1rem; /* <--- UPDATED: Increased vertical and horizontal padding */
+  min-height: 40px; /* <--- ADDED: Ensure a minimum height for the input */
+}
+
+.message-input.ant-input-textarea:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(138, 56, 245, 0.2);
+  outline: none;
+}
+
+.send-button.ant-btn-primary { /* Targeting Ant Design Button */
+  background-color: var(--primary-color) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 0.375rem !important;
+  transition: background-color 0.2s ease !important;
+}
+
+.send-button.ant-btn-primary:hover {
+  background-color: #6C2BB8 !important; /* Darker shade on hover */
+}

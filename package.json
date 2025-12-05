@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@tanstack/react-query": "^5.85.3",
+    "react-player": "^3.3.3"
+  }
+}

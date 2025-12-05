@@ -1,0 +1,246 @@
+/* src/Layout.css */
+
+/*
+  1. Base Layout Container
+  - Makes app-sidebar and app-content sit side-by-side.
+  - Ensures it takes full height and prevents unwanted wrapping.
+*/
+.app-layout {
+  display: flex;              /* Enables flexbox for children arrangement */
+  flex-direction: row;        /* Explicitly arranges children in a row (default for flex, but good for clarity) */
+  flex-wrap: nowrap;          /* Prevents children from wrapping to the next line if space is tight */
+  min-height: 100vh;          /* Ensures the layout takes at least the full viewport height */
+  width: 100vw;               /* Ensures the layout takes the full viewport width */
+  background-color: var(--bg-secondary); /* Overall page background color */
+  overflow-y: auto;           /* Prevents scrollbars on the main layout if children temporarily overflow */
+}
+
+/*
+  2. Sidebar Styling
+  - Fixed width.
+  - Internal flex for logo, menu, and footer arrangement.
+*/
+.app-sidebar {
+  position:fixed;
+  width: 240px;               /* Fixed width from your Figma design */
+  height: 100vh;
+  flex-shrink: 0;             /* Prevents the sidebar from shrinking if main content needs more space */
+  background-color:white; /* White background for the sidebar */
+  border-right: 2px solid var(--border-color); /* Subtle separator line */
+  z-index: 1;
+  display: flex;              /* Enables flexbox for its internal children (header, menu, footer) */
+  flex-direction: column;     /* Stacks sidebar internal children vertically */
+  justify-content: space-between; /* Pushes the user info/footer to the bottom */
+}
+
+.app-navbar{
+    display: flex;
+    min-height: 30px;
+    width: 100vh;
+    z-index: 1;
+    position: fixed;
+}
+
+/*.hamburger-icon {*/
+/*    display:flex;*/
+/*    flex-direction: column;*/
+/*    gap:3px;*/
+/*    width: 45px;*/
+/*    padding:6px 3px;*/
+/*    margin: 10px 10px 10px 38px;*/
+/*    background-color: rgba(250, 247, 247, 0.7);*/
+/*    border: 3px solid #6b7280;*/
+/*    border-radius: 5px;*/
+/*    justify-content: space-evenly;*/
+/*    cursor:pointer;*/
+/*    z-index:0;*/
+/*    box-sizing: border-box;*/
+/*    height: 36px;*/
+/*    position: fixed;*/
+/*}*/
+/*.hamburger-icon:hover {*/
+/*    transition: ease-in-out 300ms;*/
+/*    background-color: rgb(248, 248, 255);*/
+/*    translate: 0 -4px;*/
+/*    box-shadow: 0 5px 5px rgba(107, 114, 128, 0.58);*/
+/*}*/
+/*.hamburger-icon span{*/
+/*    background-color:  #6b7280;*/
+/*    display:block;*/
+/*    height:5px;*/
+/*    border-radius:5px;*/
+/*    transition: all 0.4s ease-in-out;*/
+/*}*/
+
+/*.hamburger-icon.open span:nth-child(1){*/
+/*    transform: rotate(45deg) translate(6px,6px);*/
+/*    height: 3px;*/
+/*    width:20px*/
+/*}*/
+/*.hamburger-icon.open span:nth-child(2){*/
+/*   opacity:0 ;*/
+/*}*/
+/*.hamburger-icon.open span:nth-child(3){*/
+/*    transform:  rotate(-45deg) translate(6px,-6px);*/
+/*    height:3px;*/
+/*    width:20px;*/
+/*}*/
+
+/* Sidebar Header Styling */
+.sidebar-header {
+  padding: 20px;
+  display: flex;
+  flex-direction: row;    /* Arrange logo and title side-by-side */
+  align-items: center;    /* Vertically center them */
+  justify-content: flex-start; /* Align them to the start (left) */
+  gap: 10px;              /* Space between logo and title */
+}
+
+/* Logo Styling within Sidebar Header */
+.sidebar-header .logo {
+  width: 40px; /* Set a fixed width for the logo */
+  height: 40px; /* Set a fixed height to make it square if needed, or use auto */
+  object-fit: contain; /* Ensures the entire image is visible within its bounds */
+  display: block;
+  margin-right: 10px; /* Space to the right of the logo */
+  margin-bottom: 0; /* Remove previous bottom margin */
+}
+
+/* App Title Styling within Sidebar Header */
+.sidebar-header .app-title {
+  font-size: 1.5em; /* Adjust font size as needed */
+  font-weight: bold;
+  color: var(--text-primary);
+  white-space: nowrap; /* Prevent text from wrapping if it's long */
+}
+
+/*
+  3. Main Content Area Styling
+  - Takes up all available horizontal space.
+  - Arranges its internal children (header and content outlet) vertically.
+  - Manages its own scrolling.
+*/
+.app-content {
+  flex-grow: 1;               /* Allows the main content to grow and fill remaining horizontal space */
+  display: flex;              /* Enables flexbox for its internal children (app-header and main-content-area) */
+  flex-direction: column;     /* Stacks the app-header and main-content-area vertically */
+  padding: 15px 20px 20px 15.4rem;              /* Padding around the entire content area */
+  overflow-y: auto;           /* Allows vertical scrolling only within the main content area if content overflows */
+  overflow-x: hidden;         /* Prevents horizontal scrolling within the main content area */
+}
+.app-content h1{
+  color: rgba(36, 51, 97, 0.91);
+  -webkit-text-stroke: 1px #181859;   /* outline thickness + color */
+  /*font-weight: bold;*/
+}
+
+/*
+  4. Header Styling (within main content)
+  - Fixed at the top of the main content.
+*/
+.app-header {
+  background-color: var(--bg-secondary); /* Matches page background */
+  padding-bottom: 20px;       /* Space below header text */
+  flex-shrink: 0;             /* Prevents the header from shrinking */
+}
+
+.app-header h1 {
+  font-size: 2.2em;
+  font-weight: 700;
+  margin-bottom: 5px;
+  color: var(--text-primary);
+}
+
+.app-header p {
+  font-size: 1.1em;
+  color: var(--text-secondary);
+}
+
+.app-header .sub-text {
+    font-size: 0.9em;
+    color: var(--text-secondary);
+}
+
+/*
+  5. Area where nested routes render
+  - Takes up remaining vertical space in the main content area.
+*/
+.main-content-area {
+    height: 100%;
+    display: flex;
+    flex-grow: 1;             /* Allows the Outlet content to take up remaining vertical space within app-content */
+    padding-top: 20px;        /* Space between header and the actual page content */
+    overflow-y: auto;         /* Allows scrolling for the actual page content if it overflows vertically */
+    overflow-x: hidden;
+}
+
+/* User Info Section Styling */
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px; /* Added padding to the user-info container */
+    border-top: 1px solid var(--border-color);
+    background-color: var(--bg-sidebar);
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+    /* No direct padding here, as it's applied to .user-info */
+}
+
+.user-name {
+    font-weight: bold;
+    color: var(--text-primary);
+}
+
+.user-email {
+    font-size: 0.9em;
+    color: var(--text-secondary);
+}
+
+.app-content {
+  /* ... existing styles ... */
+  height: 100%; /* Make app-content take full height of its parent (.app-layout) */
+}
+
+.main-content-area {
+  /* ... existing styles ... */
+  height: 100%; /* Make main-content-area take full height of its parent (.app-content) */
+  display: flex; /* Make it a flex container */
+  flex-direction: column; /* To properly size its child (AIAgent) */
+}
+
+@media screen and (max-width: 650px) {
+
+    /*.hamburger-icon {*/
+    /*    z-index: 10;*/
+    /*}*/
+    /*.hamburger-icon.open{*/
+    /*    animation: moveLeft 0.4s ease forwards;*/
+    /*    align-items: center;*/
+    /*    position:fixed;*/
+    /*    */
+    /*}*/
+    /*.hamburger-icon.open span{*/
+    /*    background-color: #1f2937;*/
+    /*}*/
+    /*.hamburger-icon.open:hover{*/
+    /*    box-shadow: none;*/
+    /*}*/
+
+    @keyframes moveLeft {
+        from {left:0}
+        to {left:200px; border:2px solid #dfe1e5; border-radius: 0 6px 6px 0; border-left:none; height: 40px;width:45px; background: white;color:black;}
+    }
+
+    .app-content{
+        padding:3.3rem 15px 15px 15px;
+    }
+
+}
+
+.getColor{
+    color: rgba(197, 221, 230, 0.85);
+}

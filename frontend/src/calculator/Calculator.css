@@ -1,0 +1,191 @@
+/* src/calculator/Calculator.css */
+
+.calculator-page-container {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column; /* Default to column for small screens */
+  gap: 2rem;
+  min-height: calc(100vh - 40px); /* Adjust based on Layout padding */
+  max-width: 1200px; /* Max width for the entire calculator layout */
+  margin: 0 auto; /* Center the container */
+}
+
+@media (min-width: 1024px) { /* lg breakpoint */
+  .calculator-page-container {
+    flex-direction: row; /* Row layout for larger screens */
+  }
+}
+
+.calculator-card {
+  flex: 1; /* Allow cards to grow and take equal space */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Enhanced shadow */
+  border-radius: 0.75rem; /* More rounded corners */
+  overflow: hidden; /* Ensure content respects border-radius */
+  background-color: white; /* Explicitly white background */
+  border: none; /* Remove default Ant Design border */
+}
+
+/* Specific border colors for cards */
+.input-form-card {
+  border-top: 5px solid var(--primary-color); /* Blue-500 from Tailwind, mapping to primary */
+}
+
+.results-display-card {
+  border-top: 5px solid #22c55e; /* Green-500 from Tailwind */
+}
+
+/* Titles and Descriptions */
+.calculator-title {
+  font-size: 2.2em !important; /* Ant Design Title override */
+  font-weight: 700 !important;
+  color: var(--text-color) !important; /* Black color */
+  margin-bottom: 1.5rem !important;
+  text-align: left !important; /* Left aligned */
+  padding-left: 1rem; /* Add some padding to align with form items */
+}
+
+.calculator-description {
+  font-size: 1.1em !important;
+  color: var(--text-secondary) !important;
+  margin-bottom: 1.5rem !important;
+  text-align: left !important; /* Left aligned */
+  padding-left: 1rem; /* Add some padding */
+}
+
+/* Form Item Styling */
+.ant-form-item-label > label {
+  font-weight: 600;
+  color: var(--text-color); /* Ensure labels are black */
+}
+
+.full-width-input .ant-input-number-input,
+.full-width-input .ant-select-selector {
+  width: 100%; /* Ensure inputs take full width */
+}
+
+/* Checkbox Group */
+.policy-checkbox-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Responsive grid for checkboxes */
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+/* Calculate Button */
+.calculate-button {
+  background-color: var(--primary-color) !important; /* Use primary color */
+  color: white !important;
+  border: none !important;
+  border-radius: 0.375rem !important;
+  font-weight: 500 !important;
+  transition: background-color 0.2s ease, transform 0.2s ease !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.calculate-button:hover {
+  background-color: #6C2BB8 !important; /* Darker shade on hover */
+  transform: translateY(-1px); /* Subtle lift */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Alert */
+.error-alert {
+  border-radius: 0.375rem;
+}
+
+/* Results Display */
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.statistic-box {
+  background-color: #e0f2fe; /* Light blue background for stats */
+  padding: 1rem;
+  border-radius: 0.5rem;
+  text-align: center;
+}
+
+.section-divider {
+  margin: 2rem 0 !important;
+  border-color: var(--border-color) !important;
+}
+
+.summary-paragraph {
+  color: var(--text-color) !important;
+  font-size: 1em !important;
+  line-height: 1.6;
+}
+
+.info-icon {
+  margin-right: 0.5rem;
+  color: var(--primary-color) !important; /* Use primary color for info icon */
+}
+
+.breakdown-title {
+  font-size: 1.5em !important;
+  font-weight: 600 !important;
+  color: var(--text-color) !important;
+  margin-bottom: 1rem !important;
+}
+
+.breakdown-list {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  color: var(--text-color);
+  margin-bottom: 1.5rem;
+}
+
+.breakdown-list li {
+  margin-bottom: 0.5rem;
+}
+
+.breakdown-item-description {
+  font-size: 0.85em !important;
+  color: var(--text-secondary) !important;
+  margin-top: 0.25rem !important;
+  margin-bottom: 0 !important;
+}
+
+.roi-scenarios {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.roi-card {
+  flex: 1;
+  min-width: 280px; /* Ensure cards don't get too small */
+  background-color: #e3f2fd !important; /* Lighter blue for ROI cards */
+  border-color: #90caf9 !important; /* Blue border */
+  border-radius: 0.5rem !important;
+}
+
+.roi-title {
+  font-size: 1.1em !important;
+  color: var(--text-color) !important;
+  margin-bottom: 0.75rem !important;
+}
+
+.roi-stats-space .ant-statistic {
+  margin-right: 1.5rem; /* Space between statistics */
+}
+
+.no-results-message {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-secondary);
+}
+
+.no-results-icon {
+  font-size: 48px !important;
+  margin-bottom: 16px !important;
+  color: var(--primary-color) !important;
+}
+
+.no-results-title {
+  color: var(--text-secondary) !important;
+}

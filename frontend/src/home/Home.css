@@ -1,0 +1,165 @@
+img {
+    width: 100%;
+    height: auto;
+}
+
+.card-tag{
+    padding:5px 5px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+/*Todo: make the margin consistent with other pages. I.e. use the index.css*/
+.home-container {
+    margin-left:15px;
+    margin-right: 20px;
+}
+
+.home-container h2{
+    font-size: 20px;
+}
+.home-sections {
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+    margin: 10px auto;
+    padding: 20px 20px;
+    border-radius: 20px;
+    background-color: white;
+    border: #6b7280;
+}
+
+
+/*Todo: this is going to be a card so research how to do that*/
+.home-box-content {
+    display: flex;
+    gap:10px;
+    justify-content: space-between;
+    flex-wrap: wrap;/*Allows items to wrap to the next line*/
+    overflow: auto;
+}
+
+.home-box-title {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr;
+    justify-content: space-between;
+    align-items: center;
+    gap:30px;
+}
+
+.home-content-card{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #dfdfdf;
+    border-radius: 10px;
+    height: 16.5rem;
+    width: 18.2rem;
+    justify-content: flex-end;
+}
+
+.home-content-card h4{
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    margin-top: 3px;
+}
+
+.home-content-card span{
+    padding: 2px 0;
+    font-size: 12px;
+    font-weight: 500;
+    color: #4a5462;
+}
+.home-content-card:hover{
+    transform: translateY(-1.5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.home-card-text{
+    background-color: white;
+    padding: 15px 20px;
+    display:flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    box-sizing: content-box;
+    border-bottom-left-radius: 9px;
+    border-bottom-right-radius: 9px;
+}
+.home-card-text button{
+    width:100%;
+    padding: 10px;
+    margin: 2px 0;
+}
+
+.home-card-text a{
+    width:100%;
+    padding: 8px;
+    margin: 2px 0;
+    text-decoration: none;
+    background-color: var(--primary-color);
+    color: var(--surface-color); /* Use surface-color for white text */
+    border: none;
+    border-radius: 0.375rem;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background-color 0.2s ease, outline 0.2s ease; /* Add outline transition */
+    font-family: inherit;
+    display: flex;
+    justify-content: center;
+}
+.home-card-completion-rate{
+    display:flex;
+    flex-direction:row;
+    justify-content: space-between;
+    width:100%;
+    margin: 5px 0;
+}
+
+.news-AI-content {
+    display:flex;
+    flex:1;
+    flex-direction: column;
+    border: 2px solid #dfdfdf;
+    border-radius: 10px;
+    padding: 10px 15px;
+}
+.news-AI-title{
+    display:flex;
+    align-items: center;
+    gap:10px;
+    padding:10px 0;
+}
+.news-AI-title p{
+    font-size: 13px;
+}
+.news-card {
+    display: flex;
+    flex-direction: column;
+    gap:7px;
+    font-size: 12px;
+}
+
+#welcome {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+#news-paragraph-content {
+    display: -webkit-box;               /* Enables the box layout model */
+    -webkit-box-orient: vertical;       /* Sets the direction for layout */
+    -webkit-line-clamp: 2;              /* Limits to 2 lines */
+    overflow: hidden;                   /* Hides overflowed content */
+
+}
+
+/*Todo: standardise button colors in index, make 2 so that I don't have to repeat and for special cases use ID*/
+#start-convo {
+    margin-top: 10px;
+    background-color: var(--secondary-color);
+    color: black;
+    max-width: 10rem;
+}
+
