@@ -7,7 +7,16 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy:all": "aws s3 sync dist/ s3://policypulse3 --delete --region eu-north-1",
+    "deploy:fix-html": "aws s3 cp dist/ s3://policypulse3 --recursive --exclude * --include *.html --content-type text/html --region eu-north-1",
+    "deploy:fix-jpg": "aws s3 cp dist/ s3://policypulse3 --recursive --exclude * --include *.jpg --content-type image/jpg --region eu-north-1",
+    "deploy:fix-jpeg": "aws s3 cp dist/ s3://policypulse3 --recursive --exclude * --include *.jpeg --content-type image/jpeg --region eu-north-1",
+    "deploy:fix-png": "aws s3 cp dist/ s3://policypulse3 --recursive --exclude * --include *.png --content-type image/png --region eu-north-1",
+    "deploy:fix-js": "aws s3 cp dist/ s3://policypulse3 --recursive --exclude * --include *.js --content-type application/javascript --region eu-north-1",
+    "deploy:fix-css": "aws s3 cp dist/ s3://policypulse3 --recursive --exclude * --include *.css --content-type text/css --region eu-north-1",
+    "deploy": "npm run deploy:all && npm run deploy:fix-html && npm run deploy:fix-jpg && npm run deploy:fix-jpeg && npm run deploy:fix-png && npm run deploy:fix-js && npm run deploy:fix-css",
+    "publish": "npm run build && npm run deploy"
   },
   "dependencies": {
     "@ant-design/icons": "^5.6.1",
@@ -26,7 +35,8 @@
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-icons": "^5.5.0",
-    "react-router-dom": "^6.30.1"
+    "react-router-dom": "^6.30.1",
+    "react-player": "^2.12.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",

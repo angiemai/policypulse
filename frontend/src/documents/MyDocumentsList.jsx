@@ -13,7 +13,7 @@ export function MyDocumentsList() {
   const [fileList, setFileList] = useState([]);
   const [uploading, setUploading] = useState(false);
   
-  const BACKEND_API_URL = 'http://localhost:8000';
+  const BACKEND_API_URL = '"http://16.171.14.0:8000';   // http://localhost:8000';
 
   const newDocsDir = "/Users/aimac/Documents/Coding/policypulse/PolicyPulseWebApp/backend/raw_files/new_docs";
   const customCollectionName = "custom_docs";

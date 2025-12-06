@@ -13,7 +13,7 @@ export function Calculator() { // Keep the component name as Calculator
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const BACKEND_URL = 'http://localhost:8000/calculate_policy_impact';
+  const BACKEND_URL = 'http://16.171.14.0:8000/calculate_policy_impact';   //http://localhost:8000/calculate_policy_impact';
   const policyOptions = [
     { label: 'Menopause / Perimenopause', value: 'menopause' },
     { label: 'Endometriosis', value: 'endometriosis' },

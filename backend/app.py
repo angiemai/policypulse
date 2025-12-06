@@ -81,7 +81,7 @@ app = FastAPI(
     },
 )
 
-origins = ["http://localhost:5173", "http://localhost:5174", "http://127.0.0.1:8000/my-saved-policies"]
+origins = ["http://localhost:5173", "http://localhost:5174", "http://127.0.0.1:8000/my-saved-policies", "http://16.171.14.0:8000"]
 # Configure CORS middleware
 app.add_middleware(
     CORSMiddleware,

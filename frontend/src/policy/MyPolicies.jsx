@@ -62,7 +62,7 @@ export function MyPolicies() {
     queryKey: ["list_documents"],
     staleTime: 1000,
     queryFn: async () => {
-      const response = await fetch("http://127.0.0.1:8000/my-saved-policies");
+      const response = await fetch("http://16.171.14.0:8000/my-saved-policies");   // http://127.0.0.1:8000/my-saved-policies");
       if (!response.ok) throw new Error("Network response was not ok");
       return response.json();
     },

@@ -41,7 +41,7 @@ async function saveDocument({editor, navigate, title, policyId}){
     }
 
     try {
-        const response = await fetch("http://127.0.0.1:8000/saved-docs", {
+        const response = await fetch("http://16.171.14.0:8000/saved-docs", {   //http://127.0.0.1:8000/saved-docs", {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",
@@ -183,7 +183,8 @@ function Recommendations({editor}) {
         const text = editor.getText();
         console.log({text})
         try {
-            const response = await axios.post("http://127.0.0.1:8000/coverage_evaluator", {text: text});
+          //  const response = await axios.post("http://127.0.0.1:8000/coverage_evaluator", {text: text});
+            const response = await axios.post("http://16.171.14.0:8000/coverage_evaluator", {text: text});
             const suggestion = response?.data?.suggestion ||"None from server" ;
 
             if (suggestion) { //i.e. if it is not undefined/null
@@ -256,7 +257,8 @@ function TextEditor() {
         enabled: !!policyId, //Only run if policyId exists
         staleTime: 1000,
         queryFn: async () => {
-            const response = await fetch(`http://127.0.0.1:8000/edit-document/${policyId}`)
+          //  const response = await fetch(`http://127.0.0.1:8000/edit-document/${policyId}`)
+            const response = await fetch(`http://16.171.14.0:8000/edit-document/${policyId}`)
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }

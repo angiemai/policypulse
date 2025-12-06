@@ -60,3 +60,16 @@ This section covers the setup for your React frontend.
     npm run dev
 
     Your frontend application will be available at http://localhost:5173.
+
+
+
+    When running on EC2
+    sudo uvicorn app:app --host 0.0.0.0 --port 8000
+
+    http://54.210.123.45:8000
+
+
+    Frontend
+    npm run dev -- --host 0.0.0.0 --port 3000
+
+    http://16.171.14.0:3000

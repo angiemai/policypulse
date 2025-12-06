@@ -14,7 +14,7 @@ export function AIAgent() {
   const messagesEndRef = useRef(null); // Ref for auto-scrolling
 
  
-  const BACKEND_CHAT_URL = 'http://localhost:8000/chat';
+  const BACKEND_CHAT_URL = 'http://16.171.14.0:8000/chat';   //http://localhost:8000/chat';
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
